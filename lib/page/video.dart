@@ -6,11 +6,6 @@ import 'package:camera/camera.dart';
 import 'package:screen/screen.dart';
 
 class Video extends StatefulWidget {
-  final BuildContext context;
-  final int idPedido;
-
-  Video({@required this.idPedido, this.context});
-
   @override
   _VideoState createState() => _VideoState();
 }

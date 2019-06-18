@@ -72,7 +72,7 @@ class _CameraState extends State<Camera> {
           stream: bloc.imagePath.stream,
           builder: (context, snapshot) {
             return snapshot.hasData
-                ? FloatingActionButton(
+                ?Container(width: 0.0,height:0.0)/* FloatingActionButton(
                     onPressed: () {
                       bloc.cropImage();
                     },
@@ -91,7 +91,7 @@ class _CameraState extends State<Camera> {
                       ],
                     ),
                     backgroundColor: Colors.grey.shade800,
-                  )
+                )*/
                 : FloatingActionButton(
                     onPressed: () {
                       bloc.onTakePictureButtonPressed();

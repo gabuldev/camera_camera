@@ -1,3 +1,3 @@
-## 1.0.6
+## 1.0.9
 
-* Downgrade camera 4.3, because 0.5 dont run Androidx
+* Removed Edit Option

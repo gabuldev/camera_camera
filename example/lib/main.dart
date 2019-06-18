@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.camera_alt),
             onPressed: () async {
-              val = await  Navigator.push(context, MaterialPageRoute(builder: (context) => Camera()));
+              val = await  showDialog(context: context,builder: (context) => Camera());
               setState(() {
 
               });
