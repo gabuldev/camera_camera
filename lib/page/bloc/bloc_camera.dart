@@ -104,6 +104,7 @@ class BlocCamera {
     File croppedFile = await ImageCropper.cropImage(
       toolbarTitle: "Editar",
       toolbarColor: Colors.black,
+      
       sourcePath: imagePath.value.path,
       ratioX: 1.0,
       ratioY: 1.0,

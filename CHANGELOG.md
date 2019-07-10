@@ -1,3 +1,3 @@
-## 1.0.9
+## 1.0.13+8
 
-* Removed Edit Option
+* New Design for mode camera, help Lucas Polazzo
