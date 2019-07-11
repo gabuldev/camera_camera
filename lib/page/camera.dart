@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:camera_camera/page/bloc/bloc_camera.dart';
 import 'package:camera_camera/shared/widgets/orientation_icon.dart';
 import 'package:camera_camera/shared/widgets/rotate_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/services.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
 
@@ -64,12 +62,7 @@ class _CameraState extends State<Camera> {
     previewRatio = previewH / previewW;
 
     return Scaffold(
-      appBar: PreferredSize(
-        child: Container(
-          color: Colors.transparent,
-        ),
-        preferredSize: Size.fromHeight(25.0),
-      ),
+    
       backgroundColor: Colors.black,
       body: ConstrainedBox(
         constraints: BoxConstraints(
