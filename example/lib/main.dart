@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:example/widgets/focus_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:camera_camera/camera_camera.dart';
 
@@ -20,7 +21,6 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -35,15 +35,25 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.camera_alt),
             onPressed: () async {
-              val = await  showDialog(context: context,builder: (context) => Camera());
-              setState(() {
-
-              });
+              val = await showDialog(
+                  context: context,
+                  builder: (context) => Camera(
+                        mode: CameraMode.normal,
+                        imageMask: FocusWidget(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ));
+              setState(() {});
             }),
-        body:Center(child: Container(
-            height: MediaQuery.of(context).size.height*0.7,
-            width: MediaQuery.of(context).size.width*0.8,
-            child: val != null ? Image.file(val,fit: BoxFit.contain,) : Text("Tire a foto")))
-    );
+        body: Center(
+            child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: val != null
+                    ? Image.file(
+                        val,
+                        fit: BoxFit.contain,
+                      )
+                    : Text("Tire a foto"))));
   }
 }

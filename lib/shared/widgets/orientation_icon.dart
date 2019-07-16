@@ -1,22 +1,22 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 
-class OrientationIcon extends StatefulWidget {
-  final Icon icon;
+class OrientationWidget extends StatefulWidget {
+  final Widget child;
+  final NativeDeviceOrientation orientation;
 
-  const OrientationIcon({Key key, this.icon}) : super(key: key);
+  const OrientationWidget({Key key , @required this.child, @required this.orientation}) : super(key: key);
   @override
-  _OrientationIconState createState() => _OrientationIconState();
+  _OrientationWidgetState createState() => _OrientationWidgetState();
 }
 
-class _OrientationIconState extends State<OrientationIcon> with SingleTickerProviderStateMixin{
+class _OrientationWidgetState extends State<OrientationWidget> with SingleTickerProviderStateMixin{
   
   Animation rotate;
   AnimationController controller;
   double angle = 0.0;
+  NativeDeviceOrientation orientation;
 
   void initAnimation(){
     controller = AnimationController(vsync: this,duration: Duration(milliseconds: 500));
@@ -27,6 +27,8 @@ class _OrientationIconState extends State<OrientationIcon> with SingleTickerProv
   @override
   void initState() {
     initAnimation();
+   
+     
     super.initState();
   }
 
@@ -38,11 +40,8 @@ class _OrientationIconState extends State<OrientationIcon> with SingleTickerProv
  
   @override
   Widget build(BuildContext context) {
-    return NativeDeviceOrientationReader(
-      useSensor: true,
-      builder: (context){
-        NativeDeviceOrientation orientation = NativeDeviceOrientationReader.orientation(context);
-        print(orientation.toString());
+     orientation = widget.orientation;
+      
         if(orientation == NativeDeviceOrientation.portraitDown || orientation == NativeDeviceOrientation.portraitUp ){
         if(controller.isCompleted)
           controller.reverse();
@@ -51,7 +50,7 @@ class _OrientationIconState extends State<OrientationIcon> with SingleTickerProv
             builder: (context, snapshot) {
               return Transform.rotate(
                 angle: rotate.value,
-                child: widget.icon,
+                child: widget.child,
               );
             }
           );
@@ -65,7 +64,7 @@ class _OrientationIconState extends State<OrientationIcon> with SingleTickerProv
             builder: (context, snapshot) {
               return Transform.rotate(
                 angle: rotate.value,
-                child: widget.icon,
+                child: widget.child,
               );
             }
           );
@@ -80,14 +79,15 @@ class _OrientationIconState extends State<OrientationIcon> with SingleTickerProv
             builder: (context, snapshot) {
               return Transform.rotate(
                 angle: rotate.value,
-                child: widget.icon,
+                child: widget.child,
               );
             }
           );
           }
+          else{
+            return widget.child;
+          }
         }
 
-      },
-    );
-  }
+      }
 }
