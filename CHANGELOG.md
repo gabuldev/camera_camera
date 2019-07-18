@@ -1,3 +1,3 @@
-## 1.0.13+8
+## 1.0.19+14
 
-* New Design for mode camera, help Lucas Polazzo
+* Add CameraFocus mode square

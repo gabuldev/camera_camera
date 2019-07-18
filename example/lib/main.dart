@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:example/widgets/focus_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:camera_camera/camera_camera.dart';
 
@@ -38,8 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
               val = await showDialog(
                   context: context,
                   builder: (context) => Camera(
-                        mode: CameraMode.normal,
-                        imageMask: FocusWidget(
+                        mode: CameraMode.fullscreen,
+                        orientationEnablePhoto: CameraOrientation.landscape,
+                        imageMask: CameraFocus.square(
                           color: Colors.black.withOpacity(0.5),
                         ),
                       ));
