@@ -28,7 +28,7 @@ packages:
       path: "C:\\Users\\gabul\\Desenvolvedor\\Mobile\\Projetos\\camera_camera"
       relative: false
     source: path
-    version: "1.0.19+14"
+    version: "1.0.20+15"
   charcode:
     dependency: transitive
     description:

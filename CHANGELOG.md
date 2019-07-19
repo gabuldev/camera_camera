@@ -1,3 +1,3 @@
-## 1.0.19+14
+## 1.0.20+15
 
-* Add CameraFocus mode square
+* Add function onFile to getFile

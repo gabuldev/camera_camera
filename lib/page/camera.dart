@@ -20,7 +20,8 @@ class Camera extends StatefulWidget {
   final Widget imageMask;
   final CameraMode mode;
   final CameraOrientation orientationEnablePhoto;
-  const Camera({Key key, this.imageMask, this.mode = CameraMode.fullscreen, this.orientationEnablePhoto = CameraOrientation.all})
+  final Function(File image) onFile;
+  const Camera({Key key, this.imageMask, this.mode = CameraMode.fullscreen, this.orientationEnablePhoto = CameraOrientation.all, this.onFile})
       : super(key: key);
   @override
   _CameraState createState() => _CameraState();
@@ -143,7 +144,7 @@ class _CameraState extends State<Camera> {
                       stream: bloc.imagePath.stream,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                         
+                       
                           return OrientationWidget(
                             orientation: orientation,
                             child: SizedBox(
@@ -319,8 +320,12 @@ class _CameraState extends State<Camera> {
                                               color: Colors.white),
                                         ),
                                         onPressed: () {
+                                          if(widget.onFile!=null)
                                           Navigator.pop(
                                               context, bloc.imagePath.value);
+                                          else{
+                                            widget.onFile(bloc.imagePath.value);
+                                          }    
                                         },
                                       ),
                                       backgroundColor: Colors.black38,
