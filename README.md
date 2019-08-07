@@ -18,9 +18,65 @@ android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 minSdkVersion 21
 ```
 
+
+
 ## Mode Photo
 
-  
+## Enable Photo
+
+```dart
+
+Camera(
+ orientationEnablePhoto: CameraOrientation.landscape,)
+
+Camera(
+ orientationEnablePhoto: CameraOrientation.portrait,)
+
+Camera(
+ orientationEnablePhoto: CameraOrientation.all,) // isDefault
+
+```
+
+### Mask Camera
+
+You can add widget top stack camera, Container, Images.png.
+
+```dart
+
+Camera(
+ imageMask: Widget
+)
+
+```
+
+### Screen Mode
+
+```dart
+
+Camera(
+ 
+ mode: CameraMode.normal or CameraMode.fullscreen
+)
+
+```
+
+### Mode Focus
+
+You can add Rectangle , Circle or Square Focus
+
+![](https://i.imgur.com/AhPO41p.jpg)
+![](https://i.imgur.com/sGqdE3D.jpg)
+![](https://i.imgur.com/6wnWAYA.jpg)
+
+  ```dart
+Camera(
+       mode: CameraMode.normal,
+      imageMask: CameraFocus.rectangle(
+                color: Colors.black.withOpacity(0.5),
+                ),
+     )
+
+  ```
 
 You can take a photo and edit.
 
@@ -34,9 +90,18 @@ File file = await  Navigator.push(context, MaterialPageRoute(builder: (context) 
 
 ```
 
+### Other mode getFile
+```dart
+
+Camera(
+  onFile: (File file) => file;
+)
+
+```
 ![](https://i.imgur.com/AupuIRm.jpg)
 
 ![](https://i.imgur.com/N7tx5SQ.jpg)
+
 
   
   

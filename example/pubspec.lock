@@ -25,10 +25,14 @@ packages:
   camera_camera:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\gabul\\Documents\\Desenvolvedor\\Mobile\\Projetos\\camera_camera"
+      path: "C:\\Users\\gabul\\Desenvolvedor\\Mobile\\Projetos\\camera_camera"
       relative: false
     source: path
+<<<<<<< HEAD
     version: "1.0.14+9"
+=======
+    version: "1.0.20+15"
+>>>>>>> a3ee5ffe2e0b3306a1831611c06f39faf05b3fcd
   charcode:
     dependency: transitive
     description:
@@ -108,7 +112,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0+1"
   quiver:
     dependency: transitive
     description:

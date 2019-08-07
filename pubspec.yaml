@@ -1,11 +1,17 @@
 name: camera_camera
+<<<<<<< HEAD
 description: Um Flutter Plugin de câmera, que funciona tanto em iOS e Android. Na parte da câmera temos a parte editável. Para Android minSDK 21.
 version: 1.0.14+9
+=======
+description:  Um Flutter Plugin de câmera, que funciona tanto em iOS e Android. Na parte da câmera temos a parte editável. Para Android minSDK 21.
+version: 1.0.21+16
+>>>>>>> a3ee5ffe2e0b3306a1831611c06f39faf05b3fcd
 author: Gabriel Sávio - Flutterando <gbrlsavio2@gmail.com>
+repository: https://github.com/gabulsavul/camera_camera
 homepage: https://github.com/gabulsavul
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   rxdart: ^0.22.0
