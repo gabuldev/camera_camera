@@ -28,7 +28,7 @@ packages:
       path: "C:\\Users\\gabul\\Documents\\Desenvolvedor\\Mobile\\Projetos\\camera_camera"
       relative: false
     source: path
-    version: "1.0.13+8"
+    version: "1.0.14+9"
   charcode:
     dependency: transitive
     description:
@@ -101,7 +101,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0+1"
+    version: "1.2.0"
   pedantic:
     dependency: transitive
     description:

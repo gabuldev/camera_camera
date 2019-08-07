@@ -1,3 +1,3 @@
-## 1.0.13+8
+## 1.0.14+9
 
-* New Design for mode camera, help Lucas Polazzo
+*  Update path_provider: ^1.2.0

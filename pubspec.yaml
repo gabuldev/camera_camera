@@ -1,6 +1,6 @@
 name: camera_camera
-description:  Um Flutter Plugin de câmera, que funciona tanto em iOS e Android. Na parte da câmera temos a parte editável. Para Android minSDK 21.
-version: 1.0.13+8
+description: Um Flutter Plugin de câmera, que funciona tanto em iOS e Android. Na parte da câmera temos a parte editável. Para Android minSDK 21.
+version: 1.0.14+9
 author: Gabriel Sávio - Flutterando <gbrlsavio2@gmail.com>
 homepage: https://github.com/gabulsavul
 
@@ -11,7 +11,7 @@ dependencies:
   rxdart: ^0.22.0
   camera: ^0.4.3+2
   video_player: ^0.10.0+4
-  path_provider: ^0.5.0+1
+  path_provider: ^1.2.0
   image_cropper: ^1.0.0
   native_device_orientation: ^0.2.0
   screen: ^0.0.5
@@ -27,7 +27,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # To add assets to your package, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
@@ -38,7 +37,6 @@ flutter:
   #
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
-
   # To add custom fonts to your package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
