@@ -1,3 +1,3 @@
-## 1.0.22+17
+## 1.0.23
 
-*  Update path_provider: ^1.2.0
+* Fix error iOS changeCamera for Matheus_Perez
