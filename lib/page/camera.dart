@@ -10,18 +10,20 @@ import 'dart:math' as math;
 
 import 'package:native_device_orientation/native_device_orientation.dart';
 
-enum CameraOrientation{
-  landscape,portrait,all
-}
+enum CameraOrientation { landscape, portrait, all }
 enum CameraMode { fullscreen, normal }
-
 
 class Camera extends StatefulWidget {
   final Widget imageMask;
   final CameraMode mode;
   final CameraOrientation orientationEnablePhoto;
   final Function(File image) onFile;
-  const Camera({Key key, this.imageMask, this.mode = CameraMode.fullscreen, this.orientationEnablePhoto = CameraOrientation.all, this.onFile})
+  const Camera(
+      {Key key,
+      this.imageMask,
+      this.mode = CameraMode.fullscreen,
+      this.orientationEnablePhoto = CameraOrientation.all,
+      this.onFile})
       : super(key: key);
   @override
   _CameraState createState() => _CameraState();
@@ -69,67 +71,64 @@ class _CameraState extends State<Camera> {
     Size size = MediaQuery.of(context).size;
     Size sizeImage = size;
     double width = size.width;
-    double height = size.height; 
-
-    
-
+    double height = size.height;
 
     return NativeDeviceOrientationReader(
       useSensor: true,
       builder: (context) {
-           NativeDeviceOrientation orientation =
+        NativeDeviceOrientation orientation =
             NativeDeviceOrientationReader.orientation(context);
 
         _buttonPhoto() => CircleAvatar(
-                                      child: IconButton(
-                                        icon: OrientationWidget(
-                                          orientation: orientation,
-                                          child: Icon(
-                                            Icons.camera_alt,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          sizeImage =
-                                              MediaQuery.of(context).size;
-                                          bloc.onTakePictureButtonPressed();
-                                        },
-                                      ),
-                                      backgroundColor: Colors.black38,
-                                      radius: 25.0,
-                                    );  
+              child: IconButton(
+                icon: OrientationWidget(
+                  orientation: orientation,
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () {
+                  sizeImage = MediaQuery.of(context).size;
+                  bloc.onTakePictureButtonPressed();
+                },
+              ),
+              backgroundColor: Colors.black38,
+              radius: 25.0,
+            );
 
-    Widget _getButtonPhoto(){
-      if(widget.orientationEnablePhoto == CameraOrientation.all){
-        return _buttonPhoto();
-      }
-      else if(widget.orientationEnablePhoto == CameraOrientation.landscape){
-        if(orientation == NativeDeviceOrientation.landscapeLeft || orientation == NativeDeviceOrientation.landscapeRight)
-          return _buttonPhoto();
-        else
-          return Container(width: 0.0,height: 0.0,);
-      }
-      else{
-        if(orientation == NativeDeviceOrientation.portraitDown || orientation == NativeDeviceOrientation.portraitUp )
-        return _buttonPhoto();
-        else
-        return Container(width: 0.0,height: 0.0,);
-      }
-    }
-
-
-
-     
-
-        if(orientation == NativeDeviceOrientation.portraitDown || orientation == NativeDeviceOrientation.portraitUp ){
-          sizeImage = Size(width, height);
+        Widget _getButtonPhoto() {
+          if (widget.orientationEnablePhoto == CameraOrientation.all) {
+            return _buttonPhoto();
+          } else if (widget.orientationEnablePhoto ==
+              CameraOrientation.landscape) {
+            if (orientation == NativeDeviceOrientation.landscapeLeft ||
+                orientation == NativeDeviceOrientation.landscapeRight)
+              return _buttonPhoto();
+            else
+              return Container(
+                width: 0.0,
+                height: 0.0,
+              );
+          } else {
+            if (orientation == NativeDeviceOrientation.portraitDown ||
+                orientation == NativeDeviceOrientation.portraitUp)
+              return _buttonPhoto();
+            else
+              return Container(
+                width: 0.0,
+                height: 0.0,
+              );
+          }
         }
-        else{
-          sizeImage = Size(height, width); 
-        } 
 
-        print(sizeImage);
-       
+        if (orientation == NativeDeviceOrientation.portraitDown ||
+            orientation == NativeDeviceOrientation.portraitUp) {
+          sizeImage = Size(width, height);
+        } else {
+          sizeImage = Size(height, width);
+        }
+
         return Scaffold(
           backgroundColor: Colors.black,
           body: ConstrainedBox(
@@ -144,14 +143,13 @@ class _CameraState extends State<Camera> {
                       stream: bloc.imagePath.stream,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                       
                           return OrientationWidget(
                             orientation: orientation,
                             child: SizedBox(
-                            
                               height: sizeImage.height,
-                             width: sizeImage.height,
-                              child:  Image.file(snapshot.data, fit: BoxFit.contain),
+                              width: sizeImage.height,
+                              child: Image.file(snapshot.data,
+                                  fit: BoxFit.contain),
                             ),
                           );
                         } else {
@@ -163,21 +161,24 @@ class _CameraState extends State<Camera> {
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
                                         if (snapshot.data) {
-                                          previewRatio =
-                                              bloc.controllCamera.value.aspectRatio;
-                                              print(previewRatio);
+                                          previewRatio = bloc
+                                              .controllCamera.value.aspectRatio;
                                           
-                                          return widget.mode == CameraMode.fullscreen
+
+                                          return widget.mode ==
+                                                  CameraMode.fullscreen
                                               ? OverflowBox(
                                                   maxHeight: size.height,
-                                                  maxWidth:
-                                                      size.height * previewRatio,
+                                                  maxWidth: size.height *
+                                                      previewRatio,
                                                   child: CameraPreview(
                                                       bloc.controllCamera),
                                                 )
                                               : AspectRatio(
-                                                  aspectRatio: bloc.controllCamera
-                                                      .value.aspectRatio,
+                                                  aspectRatio: bloc
+                                                      .controllCamera
+                                                      .value
+                                                      .aspectRatio,
                                                   child: CameraPreview(
                                                       bloc.controllCamera),
                                                 );
@@ -189,10 +190,10 @@ class _CameraState extends State<Camera> {
                                       }
                                     }),
                               ),
-                                   if (widget.imageMask != null)
-                  Center(
-                    child: widget.imageMask,
-                  ),
+                              if (widget.imageMask != null)
+                                Center(
+                                  child: widget.imageMask,
+                                ),
                             ],
                           );
                         }
@@ -260,7 +261,7 @@ class _CameraState extends State<Camera> {
                                         backgroundColor: Colors.black38,
                                         radius: 25.0,
                                       ),
-                                        _getButtonPhoto(),
+                                      _getButtonPhoto(),
                                       CircleAvatar(
                                         child: RotateIcon(
                                           child: OrientationWidget(
@@ -320,12 +321,12 @@ class _CameraState extends State<Camera> {
                                               color: Colors.white),
                                         ),
                                         onPressed: () {
-                                          if(widget.onFile!=null)
-                                          Navigator.pop(
-                                              context, bloc.imagePath.value);
-                                          else{
+                                          if (widget.onFile != null)
+                                            Navigator.pop(
+                                                context, bloc.imagePath.value);
+                                          else {
                                             widget.onFile(bloc.imagePath.value);
-                                          }    
+                                          }
                                         },
                                       ),
                                       backgroundColor: Colors.black38,
@@ -351,7 +352,6 @@ class _CameraState extends State<Camera> {
                                       backgroundColor: Colors.black38,
                                       radius: 25.0,
                                     ),
-
                                     _getButtonPhoto(),
                                     CircleAvatar(
                                       child: RotateIcon(

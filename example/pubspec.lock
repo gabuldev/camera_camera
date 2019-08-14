@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -25,14 +25,10 @@ packages:
   camera_camera:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\gabul\\Desenvolvedor\\Mobile\\Projetos\\camera_camera"
-      relative: false
+      path: ".."
+      relative: true
     source: path
-<<<<<<< HEAD
-    version: "1.0.14+9"
-=======
-    version: "1.0.20+15"
->>>>>>> a3ee5ffe2e0b3306a1831611c06f39faf05b3fcd
+    version: "1.0.22+17"
   charcode:
     dependency: transitive
     description:
@@ -70,7 +66,7 @@ packages:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   matcher:
     dependency: transitive
     description:
@@ -84,7 +80,7 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6"
+    version: "1.1.7"
   native_device_orientation:
     dependency: transitive
     description:
@@ -126,7 +122,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.22.0"
+    version: "0.22.1+1"
   screen:
     dependency: transitive
     description:
@@ -201,7 +197,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0+4"
+    version: "0.10.1+6"
 sdks:
   dart: ">=2.2.2 <3.0.0"
-  flutter: ">=1.2.0 <2.0.0"
+  flutter: ">=1.5.0 <2.0.0"
