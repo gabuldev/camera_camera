@@ -40,9 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context) => Camera(
                         mode: CameraMode.fullscreen,
                         orientationEnablePhoto: CameraOrientation.landscape,
+                        /*
                         imageMask: CameraFocus.square(
                           color: Colors.black.withOpacity(0.5),
                         ),
+                        */
                       ));
               setState(() {});
             }),
