@@ -1,3 +1,3 @@
-## 1.0.23
+## 1.0.24
 
-* Fix error iOS changeCamera for Matheus_Perez
+* Update interval for use path_provider
