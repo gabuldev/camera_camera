@@ -15,8 +15,8 @@ class _VideoState extends State<Video> {
 
   @override
   void initState() {
-    Screen.keepOn(true);
     super.initState();
+    Wakelock.enable();
     bloc.getCameras();
     bloc.cameras.listen((data) {
       bloc.controllCamera = CameraController(data[0], ResolutionPreset.medium);
@@ -29,9 +29,9 @@ class _VideoState extends State<Video> {
 
   @override
   void dispose() {
-    super.dispose();
     bloc.dispose();
-    Screen.keepOn(false);
+    Wakelock.disable();
+    super.dispose();
   }
 
   @override
