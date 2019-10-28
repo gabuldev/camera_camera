@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:camera/camera.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
@@ -99,7 +97,7 @@ class BlocCamera {
     cameraOn.close();
   }
 
-  Future<Null> cropImage() async {
+ /* Future<Null> cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
       toolbarTitle: "Editar",
       toolbarColor: Colors.black,
@@ -112,5 +110,5 @@ class BlocCamera {
     );
 
     if (croppedFile != null) imagePath.sink.add(croppedFile);
-  }
+  }*/
 }
