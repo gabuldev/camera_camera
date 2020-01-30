@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:camera_camera/camera_camera.dart';
 
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
               val = await showDialog(
                   context: context,
                   builder: (context) => Camera(
-                        mode: CameraMode.fullscreen,
+                        mode: CameraMode.normal,
                         orientationEnablePhoto: CameraOrientation.landscape,
                         /*
                         imageMask: CameraFocus.square(

@@ -7,7 +7,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-
 import 'package:native_device_orientation/native_device_orientation.dart';
 
 enum CameraOrientation { landscape, portrait, all }
@@ -16,6 +15,7 @@ enum CameraMode { fullscreen, normal }
 class Camera extends StatefulWidget {
   final Widget imageMask;
   final CameraMode mode;
+  final Widget warning;
   final CameraOrientation orientationEnablePhoto;
   final Function(File image) onFile;
   const Camera(
@@ -23,7 +23,8 @@ class Camera extends StatefulWidget {
       this.imageMask,
       this.mode = CameraMode.fullscreen,
       this.orientationEnablePhoto = CameraOrientation.all,
-      this.onFile})
+      this.onFile,
+      this.warning})
       : super(key: key);
   @override
   _CameraState createState() => _CameraState();
@@ -163,7 +164,6 @@ class _CameraState extends State<Camera> {
                                         if (snapshot.data) {
                                           previewRatio = bloc
                                               .controllCamera.value.aspectRatio;
-                                          
 
                                           return widget.mode ==
                                                   CameraMode.fullscreen
@@ -234,8 +234,13 @@ class _CameraState extends State<Camera> {
                                                 color: Colors.white),
                                           ),
                                           onPressed: () {
-                                            Navigator.pop(
-                                                context, bloc.imagePath.value);
+                                            if (widget.onFile == null)
+                                              Navigator.pop(context,
+                                                  bloc.imagePath.value);
+                                            else {
+                                              widget
+                                                  .onFile(bloc.imagePath.value);
+                                            }
                                           },
                                         ),
                                         backgroundColor: Colors.black38,
@@ -321,7 +326,7 @@ class _CameraState extends State<Camera> {
                                               color: Colors.white),
                                         ),
                                         onPressed: () {
-                                          if (widget.onFile != null)
+                                          if (widget.onFile == null)
                                             Navigator.pop(
                                                 context, bloc.imagePath.value);
                                           else {
