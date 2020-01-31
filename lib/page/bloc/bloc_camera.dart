@@ -73,7 +73,8 @@ class BlocCamera {
   void changeCamera() {
     var list = cameras.value;
     if (list.length == 2) {
-      if (controllCamera.description.lensDirection == CameraLensDirection.back) {
+      if (controllCamera.description.lensDirection ==
+          CameraLensDirection.back) {
         onNewCameraSelected(list[1]);
         cameraOn.sink.add(1);
       } else {
@@ -97,7 +98,7 @@ class BlocCamera {
     cameraOn.close();
   }
 
- /* Future<Null> cropImage() async {
+  /* Future<Null> cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
       toolbarTitle: "Editar",
       toolbarColor: Colors.black,
