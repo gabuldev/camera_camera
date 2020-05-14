@@ -42,7 +42,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.31"
+    version: "1.0.32"
   charcode:
     dependency: transitive
     description:

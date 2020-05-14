@@ -1,3 +1,6 @@
+## 1.0.32
+* Update rxDart
+
 ## 1.0.31
 * Add site
 
