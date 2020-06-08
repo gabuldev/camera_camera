@@ -77,22 +77,36 @@ class BlocCamera {
   }
 
   Future<Null> changeCamera() async {
-    var list = cameras.value;
+    try {
+      var list = cameras.value;
 
-    debugPrint('LOGX: ${list.length}');
-    if (list.length > 1) {
-      if (controllCamera.description.lensDirection ==
-          CameraLensDirection.back) {
-        debugPrint('LOGX: Frontal selected');
-        await onNewCameraSelected(list.last);
-        cameraOn.sink.add(list.length - 1);
-      } else {
-        debugPrint('LOGX: Back selected');
-        await onNewCameraSelected(list[0]);
-        cameraOn.sink.add(0);
+      debugPrint('LOGX: ${list.length}');
+      if (list.length > 1) {
+        var listCameraFront = list
+            .where((val) => val.lensDirection == CameraLensDirection.front)
+            .toList();
+
+        var listCameraBack = list
+            .where((val) => val.lensDirection == CameraLensDirection.back)
+            .toList();
+
+        if (controllCamera.description.lensDirection ==
+            CameraLensDirection.back) {
+          debugPrint('LOGX: Frontal selected');
+          await onNewCameraSelected(listCameraFront[0]);
+          cameraOn.sink.add(list.indexOf(listCameraFront[0]));
+        } else {
+          debugPrint('LOGX: Back selected');
+          await onNewCameraSelected(listCameraBack[0]);
+          cameraOn.sink.add(list.indexOf(listCameraBack[0]));
+        }
       }
+      return;
+    } catch (e) {
+      debugPrint('####### ERROR ####### ');
+      debugPrint(e);
+      debugPrint('############## ');
     }
-    return;
   }
 
   void deletePhoto() {
