@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context: context,
                   builder: (context) => Camera(
                         mode: CameraMode.fullscreen,
-                        // initialCamera: CameraSide.front,
+                        //initialCamera: CameraSide.front,
                         //enableCameraChange: false,
                         //  orientationEnablePhoto: CameraOrientation.landscape,
                         onChangeCamera: (direction, _) {
