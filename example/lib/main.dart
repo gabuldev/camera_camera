@@ -38,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
               val = await showDialog(
                   context: context,
                   builder: (context) => Camera(
-                        mode: CameraMode.normal,
+                        mode: CameraMode.fullscreen,
+
                         //  orientationEnablePhoto: CameraOrientation.landscape,
                         onChangeCamera: (direction, _) {
                           print('--------------');
