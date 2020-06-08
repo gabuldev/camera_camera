@@ -1,3 +1,6 @@
+## 1.0.33
+* Front camera does not work when rotate icon is tapped
+
 ## 1.0.32
 * Update rxDart
 
