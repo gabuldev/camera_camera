@@ -11,6 +11,7 @@ import 'package:native_device_orientation/native_device_orientation.dart';
 
 enum CameraOrientation { landscape, portrait, all }
 enum CameraMode { fullscreen, normal }
+enum CameraSide { front, back }
 
 class Camera extends StatefulWidget {
   final Widget imageMask;
@@ -18,6 +19,8 @@ class Camera extends StatefulWidget {
   final Widget warning;
   final CameraOrientation orientationEnablePhoto;
   final Function(File image) onFile;
+  final bool enableCameraChange;
+  final CameraSide initialCamera;
   final Function(CameraLensDirection direction, List<CameraDescription> cameras)
       onChangeCamera;
 
@@ -29,6 +32,8 @@ class Camera extends StatefulWidget {
     this.onFile,
     this.warning,
     this.onChangeCamera,
+    this.initialCamera = CameraSide.back,
+    this.enableCameraChange = true,
   }) : super(key: key);
   @override
   _CameraState createState() => _CameraState();
@@ -55,6 +60,7 @@ class _CameraState extends State<Camera> {
       bloc.cameraOn.sink.add(0);
       bloc.controllCamera.initialize().then((_) {
         bloc.selectCamera.sink.add(true);
+        if (widget.initialCamera == CameraSide.front) bloc.changeCamera();
       });
     });
     SystemChrome.setEnabledSystemUIOverlays([]);
@@ -282,20 +288,27 @@ class _CameraState extends State<Camera> {
                                         radius: 25.0,
                                       ),
                                       _getButtonPhoto(),
-                                      CircleAvatar(
-                                        child: RotateIcon(
-                                          child: OrientationWidget(
-                                            orientation: orientation,
-                                            child: Icon(
-                                              Icons.cached,
-                                              color: Colors.white,
+                                      (widget.enableCameraChange)
+                                          ? CircleAvatar(
+                                              child: RotateIcon(
+                                                child: OrientationWidget(
+                                                  orientation: orientation,
+                                                  child: Icon(
+                                                    Icons.cached,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                onTap: () => _changeCamera(),
+                                              ),
+                                              backgroundColor: Colors.black38,
+                                              radius: 25.0,
+                                            )
+                                          : CircleAvatar(
+                                              child: Container(),
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 25.0,
                                             ),
-                                          ),
-                                          onTap: () => _changeCamera(),
-                                        ),
-                                        backgroundColor: Colors.black38,
-                                        radius: 25.0,
-                                      )
                                     ],
                                   );
                           }),
@@ -371,20 +384,26 @@ class _CameraState extends State<Camera> {
                                       radius: 25.0,
                                     ),
                                     _getButtonPhoto(),
-                                    CircleAvatar(
-                                      child: RotateIcon(
-                                        child: OrientationWidget(
-                                          orientation: orientation,
-                                          child: Icon(
-                                            Icons.cached,
-                                            color: Colors.white,
+                                    (widget.enableCameraChange)
+                                        ? CircleAvatar(
+                                            child: RotateIcon(
+                                              child: OrientationWidget(
+                                                orientation: orientation,
+                                                child: Icon(
+                                                  Icons.cached,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              onTap: () => _changeCamera(),
+                                            ),
+                                            backgroundColor: Colors.black38,
+                                            radius: 25.0,
+                                          )
+                                        : CircleAvatar(
+                                            child: Container(),
+                                            backgroundColor: Colors.transparent,
+                                            radius: 25.0,
                                           ),
-                                        ),
-                                        onTap: () => _changeCamera(),
-                                      ),
-                                      backgroundColor: Colors.black38,
-                                      radius: 25.0,
-                                    )
                                   ],
                                 );
                         }),
