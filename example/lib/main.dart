@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Rully")),
+        appBar: AppBar(title: Text("")),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.camera_alt),
             onPressed: () async {
@@ -38,12 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   context: context,
                   builder: (context) => Camera(
                         mode: CameraMode.normal,
-                        orientationEnablePhoto: CameraOrientation.landscape,
-                        /*
-                        imageMask: CameraFocus.square(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        */
+                        //  orientationEnablePhoto: CameraOrientation.landscape,
+                        onChangeCamera: (direction, _) {
+                          print('--------------');
+                          print('$direction');
+                          print('--------------');
+                        },
+
+                        // imageMask: CameraFocus.square(
+                        //   color: Colors.black.withOpacity(0.5),
+                        // ),
                       ));
               setState(() {});
             }),

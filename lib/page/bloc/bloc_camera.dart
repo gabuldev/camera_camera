@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
@@ -52,7 +54,7 @@ class BlocCamera {
     });
   }
 
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
+  Future<Null> onNewCameraSelected(CameraDescription cameraDescription) async {
     selectCamera.sink.add(null);
     if (controllCamera != null) {
       await controllCamera.dispose();
@@ -66,21 +68,44 @@ class BlocCamera {
     await controllCamera.initialize().then((value) {
       selectCamera.sink.add(true);
     }).catchError((e) {
-      print(e);
+      debugPrint('####### ERROR ####### ');
+      debugPrint(e);
+      debugPrint('############## ');
     });
+
+    return;
   }
 
-  void changeCamera() {
-    var list = cameras.value;
-    if (list.length == 2) {
-      if (controllCamera.description.lensDirection ==
-          CameraLensDirection.back) {
-        onNewCameraSelected(list[1]);
-        cameraOn.sink.add(1);
-      } else {
-        onNewCameraSelected(list[0]);
-        cameraOn.sink.add(0);
+  Future<Null> changeCamera() async {
+    try {
+      var list = cameras.value;
+
+      debugPrint('LOGX: ${list.length}');
+      if (list.length > 1) {
+        var listCameraFront = list
+            .where((val) => val.lensDirection == CameraLensDirection.front)
+            .toList();
+
+        var listCameraBack = list
+            .where((val) => val.lensDirection == CameraLensDirection.back)
+            .toList();
+
+        if (controllCamera.description.lensDirection ==
+            CameraLensDirection.back) {
+          debugPrint('LOGX: Frontal selected');
+          await onNewCameraSelected(listCameraFront[0]);
+          cameraOn.sink.add(list.indexOf(listCameraFront[0]));
+        } else {
+          debugPrint('LOGX: Back selected');
+          await onNewCameraSelected(listCameraBack[0]);
+          cameraOn.sink.add(list.indexOf(listCameraBack[0]));
+        }
       }
+      return;
+    } catch (e) {
+      debugPrint('####### ERROR ####### ');
+      debugPrint(e);
+      debugPrint('############## ');
     }
   }
 
