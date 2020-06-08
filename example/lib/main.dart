@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -38,12 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   context: context,
                   builder: (context) => Camera(
                         mode: CameraMode.normal,
-                        orientationEnablePhoto: CameraOrientation.landscape,
-                        /*
+                        //  orientationEnablePhoto: CameraOrientation.landscape,
+                        onChangeCamera: (direction, _) {
+                          print('--------------');
+                          print('$direction');
+                          print('--------------');
+                        },
+
                         imageMask: CameraFocus.square(
                           color: Colors.black.withOpacity(0.5),
                         ),
-                        */
                       ));
               setState(() {});
             }),

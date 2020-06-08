@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
@@ -52,7 +54,7 @@ class BlocCamera {
     });
   }
 
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
+  Future<Null> onNewCameraSelected(CameraDescription cameraDescription) async {
     selectCamera.sink.add(null);
     if (controllCamera != null) {
       await controllCamera.dispose();
@@ -66,22 +68,31 @@ class BlocCamera {
     await controllCamera.initialize().then((value) {
       selectCamera.sink.add(true);
     }).catchError((e) {
-      print(e);
+      debugPrint('####### ERROR ####### ');
+      debugPrint(e);
+      debugPrint('############## ');
     });
+
+    return;
   }
 
-  void changeCamera() {
+  Future<Null> changeCamera() async {
     var list = cameras.value;
-    if (list.length == 2) {
+
+    debugPrint('LOGX: ${list.length}');
+    if (list.length > 1) {
       if (controllCamera.description.lensDirection ==
           CameraLensDirection.back) {
-        onNewCameraSelected(list[1]);
-        cameraOn.sink.add(1);
+        debugPrint('LOGX: Frontal selected');
+        await onNewCameraSelected(list.last);
+        cameraOn.sink.add(list.length - 1);
       } else {
-        onNewCameraSelected(list[0]);
+        debugPrint('LOGX: Back selected');
+        await onNewCameraSelected(list[0]);
         cameraOn.sink.add(0);
       }
     }
+    return;
   }
 
   void deletePhoto() {

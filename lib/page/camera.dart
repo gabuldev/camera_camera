@@ -18,14 +18,18 @@ class Camera extends StatefulWidget {
   final Widget warning;
   final CameraOrientation orientationEnablePhoto;
   final Function(File image) onFile;
-  const Camera(
-      {Key key,
-      this.imageMask,
-      this.mode = CameraMode.fullscreen,
-      this.orientationEnablePhoto = CameraOrientation.all,
-      this.onFile,
-      this.warning})
-      : super(key: key);
+  final Function(CameraLensDirection direction, List<CameraDescription> cameras)
+      onChangeCamera;
+
+  const Camera({
+    Key key,
+    this.imageMask,
+    this.mode = CameraMode.fullscreen,
+    this.orientationEnablePhoto = CameraOrientation.all,
+    this.onFile,
+    this.warning,
+    this.onChangeCamera,
+  }) : super(key: key);
   @override
   _CameraState createState() => _CameraState();
 }
@@ -65,6 +69,17 @@ class _CameraState extends State<Camera> {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.dispose();
     bloc.dispose();
+  }
+
+  void _changeCamera() async {
+    await bloc.changeCamera();
+
+    if (widget.onChangeCamera != null) {
+      widget.onChangeCamera(
+        bloc.controllCamera.description.lensDirection,
+        bloc.cameras.value,
+      );
+    }
   }
 
   @override
@@ -276,9 +291,7 @@ class _CameraState extends State<Camera> {
                                               color: Colors.white,
                                             ),
                                           ),
-                                          onTap: () {
-                                            bloc.changeCamera();
-                                          },
+                                          onTap: () => _changeCamera(),
                                         ),
                                         backgroundColor: Colors.black38,
                                         radius: 25.0,
@@ -367,9 +380,7 @@ class _CameraState extends State<Camera> {
                                             color: Colors.white,
                                           ),
                                         ),
-                                        onTap: () {
-                                          bloc.changeCamera();
-                                        },
+                                        onTap: () => _changeCamera(),
                                       ),
                                       backgroundColor: Colors.black38,
                                       radius: 25.0,
