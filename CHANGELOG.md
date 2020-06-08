@@ -1,3 +1,9 @@
+## 1.0.34
+* disable button to switch camera
+    new parameters
+    * enableCameraChange
+    * initialCamera
+
 ## 1.0.33
 * Front camera does not work when rotate icon is tapped
 
