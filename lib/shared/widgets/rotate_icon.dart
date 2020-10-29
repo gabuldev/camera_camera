@@ -18,8 +18,7 @@ class _RotateIconState extends State<RotateIcon>
   bool clicked = false;
 
   void initAnimation() {
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    controller = AnimationController(duration: Duration(milliseconds: 500));
     rotate = Tween(begin: angle, end: pi).animate(CurvedAnimation(
         parent: controller,
         curve: Curves.bounceOut,

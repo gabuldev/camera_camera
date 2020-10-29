@@ -21,8 +21,7 @@ class _OrientationWidgetState extends State<OrientationWidget>
   NativeDeviceOrientation orientation;
 
   void initAnimation() {
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    controller = AnimationController(duration: Duration(milliseconds: 500));
     rotate = Tween(begin: angle, end: angle)
         .animate(CurvedAnimation(parent: controller, curve: Curves.bounceOut));
   }
