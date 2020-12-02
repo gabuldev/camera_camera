@@ -1,3 +1,5 @@
+## 1.0.35
+* upgrade packages
 ## 1.0.34
 * disable button to switch camera
     new parameters
