@@ -1,8 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:camera_camera/camera_camera.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 

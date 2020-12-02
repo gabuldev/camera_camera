@@ -12,7 +12,7 @@ dependencies:
   camera: ^0.5.7+4
   video_player: ">=0.10.9+2 <2.0.0"
   path_provider: ^1.6.7
-  native_device_orientation: ^0.3.0
+  native_device_orientation: ^0.4.3
   wakelock: ^0.1.4+1
   flutter:
     sdk: flutter
