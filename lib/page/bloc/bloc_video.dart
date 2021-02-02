@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
-import 'package:path_provider/path_provider.dart';
 
 class BlocVideo {
   var cameras = BehaviorSubject<List<CameraDescription>>();
@@ -33,10 +32,6 @@ class BlocVideo {
       print("selecionado camera");
       return null;
     }
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Pictures/flutter_test';
-    await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${timestamp()}.jpg';
 
     if (controllCamera.value.isTakingPicture) {
       // A capture is already pending, do nothing.
@@ -44,12 +39,12 @@ class BlocVideo {
     }
 
     try {
-      await controllCamera.takePicture(filePath);
+      final xFile = await controllCamera.takePicture();
+      return xFile.path;
     } on CameraException catch (e) {
       print(e);
       return null;
     }
-    return filePath;
   }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
@@ -110,37 +105,18 @@ class BlocVideo {
   }
 
   Future<String> startVideoRecording() async {
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Movies/flutter_test';
-    await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${timestamp()}.mp4';
-
     if (controllCamera.value.isRecordingVideo) {
       // A recording is already started, do nothing.
-      return null;
+      return "building...";
     }
 
     try {
-      await controllCamera.startVideoRecording(filePath);
+      await controllCamera.startVideoRecording();
     } on CameraException catch (e) {
       print(e);
       return null;
     }
     videoOn.sink.add(false);
-    /*  Timer.periodic(Duration(seconds: 1), (time) {
-      var value = timeVideo.value * 60;
-      if (time.tick == 63 || videoOn.value == true) {
-        onStopButtonPressed();
-        timeVideo.sink.add(0);
-        time.cancel();
-      } else {
-        value++;
-        print("valor: ${value / 60}");
-        timeVideo.sink.add(value / 60);
-      }
-    });*/
-
-    return filePath;
   }
 
   Future<void> stopVideoRecording() async {

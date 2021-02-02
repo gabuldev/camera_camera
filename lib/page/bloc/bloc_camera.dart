@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BlocCamera {
@@ -27,10 +26,6 @@ class BlocCamera {
       print("selecionado camera");
       return null;
     }
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Pictures/flutter_test';
-    await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${timestamp()}.jpg';
 
     if (controllCamera.value.isTakingPicture) {
       // A capture is already pending, do nothing.
@@ -38,12 +33,12 @@ class BlocCamera {
     }
 
     try {
-      await controllCamera.takePicture(filePath);
+      final xFile = await controllCamera.takePicture();
+      return xFile.path;
     } on CameraException catch (e) {
       print(e);
       return null;
     }
-    return filePath;
   }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
