@@ -1,3 +1,11 @@
+## 1.1.1-beta
+
+- Update camera for 0.7.0+1
+- Update path_provider for 1.6.27
+- Update rxdart for 0.25.0
+- Update video_player for 1.0.1
+- Update wakelock for 2.1+1
+
 ## 1.1.0-beta
 
 - Update camera for 0.0.7
