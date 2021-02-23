@@ -1,5 +1,5 @@
 import 'package:camera/camera.dart';
-import 'package:camera2/src/camera_bloc.dart';
+import 'package:camera2/src/core/camera_bloc.dart';
 import 'package:camera2/src/core/camera_service.dart';
 import 'package:camera2/src/core/camera_status.dart';
 
@@ -11,9 +11,10 @@ class CameraServiceMock extends Mock implements CameraService {}
 void main() {
   CameraBloc controller;
   CameraService service;
+  Function(String value) onFile;
   setUp(() {
     service = CameraServiceMock();
-    controller = CameraBloc(service: service);
+    controller = CameraBloc(service: service, onFile: onFile);
   });
 
   group("Test CameraBloc", () {
@@ -45,9 +46,11 @@ void main() {
       when(service.getCameras())
           .thenAnswer((_) => Future.value([CameraDescription()]));
       controller.getAvailableCameras();
-      controller.statusStream.listen((state) => state.when(success: (_) {
+      controller.statusStream.listen((state) => state.when(
+          success: (_) {
             controller.changeCamera();
-          }));
+          },
+          orElse: () {}));
       await expectLater(
           controller.statusStream,
           emitsInOrder([
@@ -62,10 +65,12 @@ void main() {
       when(service.getCameras()).thenAnswer(
           (_) => Future.value([CameraDescription(), CameraDescription()]));
       controller.getAvailableCameras();
-      controller.statusStream.listen((state) => state.when(success: (_) {
+      controller.statusStream.listen((state) => state.when(
+          success: (_) {
             controller.changeCamera();
             controller.changeCamera();
-          }));
+          },
+          orElse: () {}));
 
       await expectLater(
           controller.statusStream,
@@ -82,11 +87,13 @@ void main() {
       when(service.getCameras()).thenAnswer(
           (_) => Future.value([CameraDescription(), CameraDescription()]));
       controller.getAvailableCameras();
-      controller.statusStream.listen((state) => state.when(success: (_) {
+      controller.statusStream.listen((state) => state.when(
+          success: (_) {
             controller.changeCamera();
             controller.changeCamera();
             controller.changeCamera();
-          }));
+          },
+          orElse: () {}));
 
       await expectLater(
           controller.statusStream,

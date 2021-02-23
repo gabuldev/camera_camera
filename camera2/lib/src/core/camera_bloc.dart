@@ -1,17 +1,25 @@
 import 'package:camera/camera.dart';
-import 'package:camera2/src/presentation/controller/camera_camera_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
 
-import 'camera_status.dart';
+import 'package:camera2/src/presentation/controller/camera_camera_controller.dart';
+import 'package:camera2/src/shared/entities/camera_side.dart';
+
 import 'camera_service.dart';
+import 'camera_status.dart';
 
 class CameraBloc {
   final CameraService service;
+  final void Function(String value) onFile;
+  final CameraSide cameraSide;
+  final List<FlashMode> flashModes;
   CameraCameraController _cameraController;
 
   CameraBloc({
     @required this.service,
+    @required this.onFile,
+    @required this.cameraSide,
+    @required this.flashModes,
   });
 
   //STREAM STATUS
@@ -33,6 +41,9 @@ class CameraBloc {
     status = CameraStatusLoading();
     try {
       final cameras = await service.getCameras();
+      if (cameraSide == CameraSide.back || cameraSide == CameraSide.front) {
+        cameras.removeWhere((e) => e.lensDirection == cameraSide.lensDirection);
+      }
       status = CameraStatusSuccess(cameras: cameras);
       return;
     } on CameraException catch (e) {
@@ -69,8 +80,11 @@ class CameraBloc {
     final cameras = status.selected.cameras;
     final indexSelected = status.selected.indexSelected;
     _cameraController = CameraCameraController(
-        cameraDescription: cameras[indexSelected],
-        resolutionPreset: resolutionPreset);
+      cameraDescription: cameras[indexSelected],
+      resolutionPreset: resolutionPreset,
+      onFile: onFile,
+      flashModes: flashModes,
+    );
     status = CameraStatusPreview(
         controller: _cameraController,
         cameras: cameras,

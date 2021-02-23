@@ -1,11 +1,14 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+
 import 'package:camera2/src/presentation/controller/camera_camera_status.dart';
 import 'package:camera2/src/shared/entities/camera.dart';
-import 'package:flutter/material.dart';
 
 class CameraCameraController {
   final ResolutionPreset resolutionPreset;
   final CameraDescription cameraDescription;
+  final List<FlashMode> flashModes;
+  final void Function(String path) onFile;
 
   final statusNotifier = ValueNotifier<CameraCameraStatus>(CameraCameraEmpty());
   CameraCameraStatus get status => statusNotifier.value;
@@ -14,6 +17,8 @@ class CameraCameraController {
   CameraCameraController({
     @required this.resolutionPreset,
     @required this.cameraDescription,
+    @required this.flashModes,
+    @required this.onFile,
   }) {
     _controller = CameraController(cameraDescription, resolutionPreset);
   }
@@ -28,7 +33,9 @@ class CameraCameraController {
       final minZoom = await _controller.getMinZoomLevel();
       final maxExposure = await _controller.getMaxExposureOffset();
       final minExposure = await _controller.getMinExposureOffset();
-      await _controller.setFlashMode(FlashMode.off);
+      try {
+        await _controller.setFlashMode(FlashMode.off);
+      } catch (e) {}
 
       status = CameraCameraSuccess(
           camera: Camera(
@@ -51,7 +58,7 @@ class CameraCameraController {
 
   void changeFlashMode() async {
     final flashMode = status.camera.flashMode;
-    final list = FlashMode.values;
+    final list = flashModes;
     var index = list.indexWhere((e) => e == flashMode);
     if (index + 1 < list.length) {
       index++;
@@ -133,7 +140,9 @@ class CameraCameraController {
 
   void takePhoto() async {
     final file = await _controller.takePicture();
-    print(file);
+    if (onFile != null) {
+      onFile(file.path);
+    }
   }
 
   Widget buildPreview() => _controller.buildPreview();
