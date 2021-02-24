@@ -1,18 +1,19 @@
-# Camera_Camera
+# Camera_Camera 2.0
 
-  
 
-That is plugin contains native access camera your device, Android and iOS. You can take a photo or record video. Return file.
+## New Features!
+ - Add Feature Zoom!
+ - Add Feature FlashMode
+ - Add Feature Change Camera, and seletec the CameraSide your prefer activated!
+ - CallBack for return File your photo, onFile(File yourFile)
+ - Removed return using Navigator.pop(context,file)
+ - Refactor in internal structure 
 
+ ![example](https://i.imgur.com/CWbwCoH.png=200x200)   
+
+
+# Guide for instalation
   ## Android
-  You need add in **AndroidManifest.xml**
-```dart
-<activity
-android:name="com.yalantis.ucrop.UCropActivity"
-android:screenOrientation="portrait"
-android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-```
-
   You need add in **app/build.gradle**
 ```dart
 minSdkVersion 21
@@ -27,143 +28,68 @@ minSdkVersion 21
       <string>Can I use the mic please?</string>
   ```
 
-## Mode Photo
 
-## Enable Photo
-
-```dart
-
-Camera(
- orientationEnablePhoto: CameraOrientation.landscape,)
-
-Camera(
- orientationEnablePhoto: CameraOrientation.portrait,)
-
-Camera(
- orientationEnablePhoto: CameraOrientation.all,) // isDefault
-
-```
-
-### Mask Camera
-
-You can add widget top stack camera, Container, Images.png.
-
-```dart
-
-Camera(
- imageMask: Widget
-)
-
-```
-
-### Screen Mode
-
-```dart
-
-Camera(
- 
- mode: CameraMode.normal or CameraMode.fullscreen
-)
-
-```
-
-### Mode Focus
-
-You can add Rectangle , Circle or Square Focus
-
-![](https://i.imgur.com/AhPO41p.jpg)
-![](https://i.imgur.com/sGqdE3D.jpg)
-![](https://i.imgur.com/6wnWAYA.jpg)
-
-  ```dart
-Camera(
-       mode: CameraMode.normal,
-      imageMask: CameraFocus.rectangle(
-                color: Colors.black.withOpacity(0.5),
-                ),
-     )
-
-  ```
-
-You can take a photo and edit.
-
-```dart
-
-yourFunction () async {
-
-File file = await  Navigator.push(context, MaterialPageRoute(builder: (context) => Camera()));
-
-})
-
-```
-
-### Other mode getFile
-```dart
-
-Camera(
-  onFile: (File file) => file;
-)
-
-```
-![](https://i.imgur.com/AupuIRm.jpg)
-
-![](https://i.imgur.com/N7tx5SQ.jpg)
-
-
-  
-  
-
-# Mode Video
-
-  
-
-You cand record video and preview.
-
-  
-
-```dart
-
-yourFunction () async {
-
-File file = await  Navigator.push(context, MaterialPageRoute(builder: (context) => Video()));
-
-})
-
-```
-
-  
-
-## Installation
-
-  
-
+## Flutter
 Add package in pubspec.yaml
 
-  
-
-```bash
-
+```yaml
 camera_camera: current_version
-
 ```
 
-  
+## How to use
 
-## Usage
+Camera_Camera is widget, you can use anywhere
 
-  
-
-Import this in your page
-
-  
+Example 01
 
 ```dart
-
-import  'package:camera_camera/camera_camera.dart';
-
+return Scaffold(
+      body: CameraCamera(
+        onFile: (file) => print(file);
+      )
+);
 ```
 
-  
+Example 02
+
+```dart
+return Scaffold(
+      body: CameraCamera(
+        onFile: (file) => print(file);
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+           Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => CameraCamera(
+                  onFile: (file) {
+                    photos.add(file);
+                    //When take foto you should close camera
+                    Navigator.pop(context);
+                    setState(() {});
+                  },
+                )))
+        },
+        child: Icon(Icons.camera_alt),
+      ),
+);
+```
+
+## Roadmap 2.0
+
+| Feature                                   | Progress |
+| :---------------------------------------- | :------: |
+| Zoom                                      |    ✅    |
+| Flash                                     |    ✅    |
+| CameraSide select                         |    ✅    |
+| nullsafety support                        |          |
+| Add Exposure controll                     |          |
+| Add Easy Mode Video                       |          |
+| Add Gallery                               |          |
+
+
+
 
 ## Contributing
 

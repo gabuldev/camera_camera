@@ -31,13 +31,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final photos = <File>[];
 
-  void _incrementCounter() {
+  void openCamera() {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (_) => CameraPage(
-                  onFile: (path) {
-                    photos.add(File(path));
+            builder: (_) => CameraCamera(
+                  onFile: (file) {
+                    photos.add(file);
                     Navigator.pop(context);
                     setState(() {});
                   },
@@ -68,8 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: openCamera,
         child: Icon(Icons.camera_alt),
       ),
     );

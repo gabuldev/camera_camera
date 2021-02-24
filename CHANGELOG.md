@@ -1,3 +1,10 @@
+## 2.0.0-beta
+- Add Feature Zoom!
+- Add Feature FlashMode
+- Add Feature Change Camera, and seletec the CameraSide your prefer activated!
+- CallBack for return File your photo, onFile(File yourFile)
+- Removed return using Navigator.pop(context,file)
+- Refactor in internal structure
 ## 1.1.1-beta
 
 - Update camera for 0.7.0+1

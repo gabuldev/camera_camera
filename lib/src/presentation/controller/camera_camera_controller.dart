@@ -8,7 +8,7 @@ class CameraCameraController {
   final ResolutionPreset resolutionPreset;
   final CameraDescription cameraDescription;
   final List<FlashMode> flashModes;
-  final void Function(String path) onFile;
+  final void Function(String path) onPath;
 
   final statusNotifier = ValueNotifier<CameraCameraStatus>(CameraCameraEmpty());
   CameraCameraStatus get status => statusNotifier.value;
@@ -18,7 +18,7 @@ class CameraCameraController {
     @required this.resolutionPreset,
     @required this.cameraDescription,
     @required this.flashModes,
-    @required this.onFile,
+    @required this.onPath,
   }) {
     _controller = CameraController(cameraDescription, resolutionPreset);
   }
@@ -140,8 +140,8 @@ class CameraCameraController {
 
   void takePhoto() async {
     final file = await _controller.takePicture();
-    if (onFile != null) {
-      onFile(file.path);
+    if (onPath != null) {
+      onPath(file.path);
     }
   }
 

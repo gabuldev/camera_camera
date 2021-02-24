@@ -9,12 +9,12 @@ import 'package:camera_camera/src/presentation/widgets/camera_preview.dart';
 import 'package:camera_camera/src/shared/entities/camera_side.dart';
 import 'package:flutter/material.dart';
 
-class CameraPage extends StatefulWidget {
+class CameraCamera extends StatefulWidget {
   ///Define your prefer resolution
   final ResolutionPreset resolutionPreset;
 
-  ///CallBack function returns path your photo taken
-  final void Function(String path) onFile;
+  ///CallBack function returns File your photo taken
+  final void Function(File file) onFile;
 
   ///Define types of camera side is enabled
   final CameraSide cameraSide;
@@ -25,7 +25,7 @@ class CameraPage extends StatefulWidget {
   ///Enable zoom camera ( default = true )
   final bool enableZoom;
 
-  CameraPage({
+  CameraCamera({
     Key key,
     this.resolutionPreset = ResolutionPreset.ultraHigh,
     this.onFile,
@@ -35,10 +35,10 @@ class CameraPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CameraPageState createState() => _CameraPageState();
+  _CameraCameraState createState() => _CameraCameraState();
 }
 
-class _CameraPageState extends State<CameraPage> {
+class _CameraCameraState extends State<CameraCamera> {
   CameraBloc bloc;
   StreamSubscription _subscription;
   @override
@@ -46,7 +46,7 @@ class _CameraPageState extends State<CameraPage> {
     bloc = CameraBloc(
       flashModes: widget.flashModes,
       service: CameraServiceImpl(),
-      onFile: widget.onFile,
+      onPath: (path) => widget.onFile(File(path)),
       cameraSide: widget.cameraSide,
     );
     bloc.init();

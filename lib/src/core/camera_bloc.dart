@@ -9,14 +9,14 @@ import 'camera_status.dart';
 
 class CameraBloc {
   final CameraService service;
-  final void Function(String value) onFile;
+  final void Function(String value) onPath;
   final CameraSide cameraSide;
   final List<FlashMode> flashModes;
   CameraCameraController _cameraController;
 
   CameraBloc({
     @required this.service,
-    @required this.onFile,
+    @required this.onPath,
     @required this.cameraSide,
     @required this.flashModes,
   });
@@ -81,7 +81,7 @@ class CameraBloc {
     _cameraController = CameraCameraController(
       cameraDescription: cameras[indexSelected],
       resolutionPreset: resolutionPreset,
-      onFile: onFile,
+      onPath: onPath,
       flashModes: flashModes,
     );
     status = CameraStatusPreview(

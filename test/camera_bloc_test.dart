@@ -17,7 +17,7 @@ void main() {
     service = CameraServiceMock();
     controller = CameraBloc(
         service: service,
-        onFile: onFile,
+        onPath: onFile,
         cameraSide: CameraSide.all,
         flashModes: [FlashMode.off]);
   });
