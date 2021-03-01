@@ -26,9 +26,9 @@ class CameraCamera extends StatefulWidget {
   final bool enableZoom;
 
   CameraCamera({
-    Key key,
+    Key? key,
     this.resolutionPreset = ResolutionPreset.ultraHigh,
-    this.onFile,
+    required this.onFile,
     this.cameraSide = CameraSide.all,
     this.flashModes = FlashMode.values,
     this.enableZoom = true,
@@ -39,8 +39,8 @@ class CameraCamera extends StatefulWidget {
 }
 
 class _CameraCameraState extends State<CameraCamera> {
-  CameraBloc bloc;
-  StreamSubscription _subscription;
+  late CameraBloc bloc;
+  late StreamSubscription _subscription;
   @override
   void initState() {
     bloc = CameraBloc(
@@ -76,7 +76,7 @@ class _CameraCameraState extends State<CameraCamera> {
       child: StreamBuilder<CameraStatus>(
         stream: bloc.statusStream,
         initialData: CameraStatusEmpty(),
-        builder: (_, snapshot) => snapshot.data.when(
+        builder: (_, snapshot) => snapshot.data!.when(
             preview: (controller) => Stack(
                   children: [
                     CameraCameraPreview(

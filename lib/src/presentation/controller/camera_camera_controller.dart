@@ -5,25 +5,25 @@ import 'package:flutter/material.dart';
 import 'camera_camera_status.dart';
 
 class CameraCameraController {
-  final ResolutionPreset resolutionPreset;
-  final CameraDescription cameraDescription;
-  final List<FlashMode> flashModes;
-  final void Function(String path) onPath;
+  ResolutionPreset resolutionPreset;
+  CameraDescription cameraDescription;
+  List<FlashMode> flashModes;
+  void Function(String path) onPath;
+
+  late CameraController _controller;
 
   final statusNotifier = ValueNotifier<CameraCameraStatus>(CameraCameraEmpty());
   CameraCameraStatus get status => statusNotifier.value;
   set status(CameraCameraStatus status) => statusNotifier.value = status;
 
   CameraCameraController({
-    @required this.resolutionPreset,
-    @required this.cameraDescription,
-    @required this.flashModes,
-    @required this.onPath,
+    required this.resolutionPreset,
+    required this.cameraDescription,
+    required this.flashModes,
+    required this.onPath,
   }) {
     _controller = CameraController(cameraDescription, resolutionPreset);
   }
-
-  CameraController _controller;
 
   void init() async {
     status = CameraCameraLoading();
@@ -46,7 +46,7 @@ class CameraCameraController {
               minExposure: minExposure,
               flashMode: FlashMode.off));
     } on CameraException catch (e) {
-      status = CameraCameraFailure(message: e.description, exception: e);
+      status = CameraCameraFailure(message: e.description ?? "", exception: e);
     }
   }
 

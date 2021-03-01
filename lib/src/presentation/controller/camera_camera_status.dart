@@ -13,18 +13,18 @@ class CameraCameraLoading extends CameraCameraStatus {
 }
 
 class CameraCameraFailure extends CameraCameraStatus {
-  final String message;
-  final CameraException exception;
+  String message;
+  CameraException exception;
   CameraCameraFailure({
-    this.message,
-    this.exception,
+    required this.message,
+    required this.exception,
   });
 }
 
 class CameraCameraSuccess extends CameraCameraStatus {
-  final Camera camera;
+  Camera camera;
   CameraCameraSuccess({
-    this.camera,
+    required this.camera,
   });
 }
 
@@ -34,10 +34,10 @@ extension CameraCameraStatusExt on CameraCameraStatus {
   CameraCameraLoading get loading => this as CameraCameraLoading;
   CameraCameraSuccess get success => this as CameraCameraSuccess;
   dynamic when({
-    Function(String message, dynamic exception) failure,
-    Function() loading,
-    @required Function() orElse,
-    Function(Camera camera) success,
+    Function(String message, dynamic exception)? failure,
+    Function()? loading,
+    required Function() orElse,
+    Function(Camera camera)? success,
   }) {
     switch (this.runtimeType) {
       case CameraCameraFailure:
@@ -48,7 +48,7 @@ extension CameraCameraStatusExt on CameraCameraStatus {
             return orElse();
           }
         }
-        break;
+
       case CameraCameraLoading:
         {
           if (loading != null) {
@@ -58,7 +58,6 @@ extension CameraCameraStatusExt on CameraCameraStatus {
           }
         }
 
-        break;
       case CameraCameraSuccess:
         {
           if (success != null) {
@@ -67,7 +66,6 @@ extension CameraCameraStatusExt on CameraCameraStatus {
             return orElse();
           }
         }
-        break;
 
       default:
         throw "CAMERA CAMERA (UI) INVALID STATUS";

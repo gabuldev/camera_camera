@@ -5,15 +5,16 @@ import 'package:camera_camera/src/core/camera_service.dart';
 import 'package:camera_camera/src/core/camera_status.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class CameraServiceMock extends Mock implements CameraService {}
 
 void main() {
-  CameraBloc controller;
-  CameraService service;
-  Function(String value) onFile;
+  late CameraBloc controller;
+  late CameraService service;
+  late Function(String value) onFile;
   setUp(() {
+    onFile = (value) {};
     service = CameraServiceMock();
     controller = CameraBloc(
         service: service,
@@ -24,8 +25,12 @@ void main() {
 
   group("Test CameraBloc", () {
     test("Get AvailableCameras - success", () {
-      when(service.getCameras())
-          .thenAnswer((_) => Future.value([CameraDescription()]));
+      when(service).calls(#getCameras).thenReturn((_) => Future.value([
+            CameraDescription(
+                name: "teste",
+                sensorOrientation: 0,
+                lensDirection: CameraLensDirection.back)
+          ]));
       controller.getAvailableCameras();
       controller.statusStream.listen(print);
       expectLater(
@@ -37,7 +42,7 @@ void main() {
     });
 
     test("Get AvailableCameras - failure", () {
-      when(service.getCameras()).thenThrow(CameraException("0", "error"));
+      when(service).calls(#getCameras).thenThrow(CameraException("0", "error"));
       controller.getAvailableCameras();
 
       expectLater(
@@ -48,8 +53,12 @@ void main() {
     });
 
     test("changeCamera when status is CameraStatusSuccess", () async {
-      when(service.getCameras())
-          .thenAnswer((_) => Future.value([CameraDescription()]));
+      when(service).calls(#getCameras).thenAnswer((_) => Future.value([
+            CameraDescription(
+                name: "teste",
+                sensorOrientation: 0,
+                lensDirection: CameraLensDirection.back)
+          ]));
       controller.getAvailableCameras();
       controller.statusStream.listen((state) => state.when(
           success: (_) {
@@ -67,8 +76,16 @@ void main() {
     });
 
     test("changeCamera for next camera", () async {
-      when(service.getCameras()).thenAnswer(
-          (_) => Future.value([CameraDescription(), CameraDescription()]));
+      when(service).calls(#getCameras).thenAnswer((_) => Future.value([
+            CameraDescription(
+                name: "teste",
+                sensorOrientation: 0,
+                lensDirection: CameraLensDirection.back),
+            CameraDescription(
+                name: "teste",
+                sensorOrientation: 0,
+                lensDirection: CameraLensDirection.back)
+          ]));
       controller.getAvailableCameras();
       controller.statusStream.listen((state) => state.when(
           success: (_) {
@@ -89,8 +106,16 @@ void main() {
     });
 
     test("changeCamera for next camera and return index 0", () async {
-      when(service.getCameras()).thenAnswer(
-          (_) => Future.value([CameraDescription(), CameraDescription()]));
+      when(service).calls(#getCameras).thenAnswer((_) => Future.value([
+            CameraDescription(
+                name: "teste",
+                sensorOrientation: 0,
+                lensDirection: CameraLensDirection.back),
+            CameraDescription(
+                name: "teste",
+                sensorOrientation: 0,
+                lensDirection: CameraLensDirection.back)
+          ]));
       controller.getAvailableCameras();
       controller.statusStream.listen((state) => state.when(
           success: (_) {

@@ -3,17 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class RotateIcon extends StatefulWidget {
-  final Widget child;
-  final Function onTap;
-  const RotateIcon({Key key, this.child, this.onTap}) : super(key: key);
+  final Widget? child;
+  final Function? onTap;
+  const RotateIcon({Key? key, this.child, this.onTap}) : super(key: key);
   @override
   _RotateIconState createState() => _RotateIconState();
 }
 
 class _RotateIconState extends State<RotateIcon>
     with SingleTickerProviderStateMixin {
-  Animation rotate;
-  AnimationController controller;
+  late Animation rotate;
+  late AnimationController controller;
   double angle = 0.0;
   bool clicked = false;
 
@@ -47,7 +47,9 @@ class _RotateIconState extends State<RotateIcon>
             angle: rotate.value,
             child: GestureDetector(
                 onTap: () {
-                  widget.onTap();
+                  if (widget.onTap != null) {
+                    widget.onTap!();
+                  }
                   if (!clicked) {
                     clicked = true;
                     controller.forward();

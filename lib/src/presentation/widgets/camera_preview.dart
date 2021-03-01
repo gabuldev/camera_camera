@@ -3,14 +3,14 @@ import 'package:camera_camera/src/presentation/controller/camera_camera_status.d
 import 'package:flutter/material.dart';
 
 class CameraCameraPreview extends StatefulWidget {
-  final void Function(String value) onFile;
+  final void Function(String value)? onFile;
   final CameraCameraController controller;
   final bool enableZoom;
   CameraCameraPreview({
-    Key key,
+    Key? key,
     this.onFile,
-    @required this.controller,
-    @required this.enableZoom,
+    required this.controller,
+    required this.enableZoom,
   }) : super(key: key);
 
   @override

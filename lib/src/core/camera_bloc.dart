@@ -1,30 +1,30 @@
 import 'package:camera/camera.dart';
 import 'package:camera_camera/src/presentation/controller/camera_camera_controller.dart';
 import 'package:camera_camera/src/shared/entities/camera_side.dart';
-import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
 
 import 'camera_service.dart';
 import 'camera_status.dart';
 
 class CameraBloc {
-  final CameraService service;
-  final void Function(String value) onPath;
-  final CameraSide cameraSide;
-  final List<FlashMode> flashModes;
-  CameraCameraController _cameraController;
+  CameraService service;
+  void Function(String value) onPath;
+  CameraSide cameraSide;
+  List<FlashMode> flashModes;
+  late CameraCameraController _cameraController;
 
   CameraBloc({
-    @required this.service,
-    @required this.onPath,
-    @required this.cameraSide,
-    @required this.flashModes,
+    required this.service,
+    required this.onPath,
+    required this.cameraSide,
+    required this.flashModes,
   });
 
   //STREAM STATUS
   final statusStream =
       BehaviorSubject<CameraStatus>.seeded(CameraStatusEmpty());
-  CameraStatus get status => statusStream.value;
+  CameraStatus get status =>
+      statusStream.valueWrapper?.value ?? CameraStatusEmpty();
   set status(CameraStatus status) => statusStream.sink.add(status);
 
   void init() async {
@@ -46,12 +46,12 @@ class CameraBloc {
       status = CameraStatusSuccess(cameras: cameras);
       return;
     } on CameraException catch (e) {
-      status = CameraStatusFailure(message: e.description, error: e);
+      status = CameraStatusFailure(message: e.description ?? "", error: e);
       return;
     }
   }
 
-  void changeCamera([int specificIndex]) {
+  void changeCamera([int? specificIndex]) {
     if (status is CameraStatusSuccess) {
       final cameras = status.success.cameras;
       status = CameraStatusSelected(cameras: cameras, indexSelected: 0);
@@ -72,10 +72,9 @@ class CameraBloc {
   void startPreview(
     ResolutionPreset resolutionPreset,
   ) async {
-    if (_cameraController != null) {
-      await _cameraController.dispose();
-      await Future.delayed(Duration(milliseconds: 800));
-    }
+    await _cameraController.dispose();
+    await Future.delayed(Duration(milliseconds: 800));
+
     final cameras = status.selected.cameras;
     final indexSelected = status.selected.indexSelected;
     _cameraController = CameraCameraController(

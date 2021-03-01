@@ -5,21 +5,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Camera {
   final double maxZoom;
   final double minZoom;
-  final double maxExposure;
-  final double minExposure;
-  final double exposureOffset;
+  final double? maxExposure;
+  final double? minExposure;
+  final double? exposureOffset;
   final double zoom;
-  final FlashMode flashMode;
-  final ExposureMode exposureMode;
-  final Offset focusPoint;
-  final Offset exposurePoint;
+  final FlashMode? flashMode;
+  final ExposureMode? exposureMode;
+  final Offset? focusPoint;
+  final Offset? exposurePoint;
   Camera({
-    this.maxZoom,
-    this.minZoom,
+    required this.maxZoom,
+    required this.minZoom,
     this.maxExposure,
     this.minExposure,
     this.exposureOffset,
-    this.zoom,
+    required this.zoom,
     this.flashMode,
     this.exposureMode,
     this.focusPoint,
@@ -27,16 +27,16 @@ class Camera {
   });
 
   Camera copyWith({
-    double maxZoom,
-    double minZoom,
-    double maxExposure,
-    double minExposure,
-    double exposureOffset,
-    double zoom,
-    FlashMode flashMode,
-    ExposureMode exposureMode,
-    Offset focusPoint,
-    Offset exposurePoint,
+    double? maxZoom,
+    double? minZoom,
+    double? maxExposure,
+    double? minExposure,
+    double? exposureOffset,
+    double? zoom,
+    FlashMode? flashMode,
+    ExposureMode? exposureMode,
+    Offset? focusPoint,
+    Offset? exposurePoint,
   }) {
     return Camera(
       maxZoom: maxZoom ?? this.maxZoom,
@@ -59,25 +59,21 @@ class Camera {
           return Icons.flash_on;
         }
 
-        break;
       case FlashMode.auto:
         {
           return Icons.flash_auto;
         }
 
-        break;
       case FlashMode.off:
         {
           return Icons.flash_off;
         }
 
-        break;
       case FlashMode.torch:
         {
           return FontAwesomeIcons.lightbulb;
         }
 
-        break;
       default:
         throw "INVALID FLASH MODE";
     }
