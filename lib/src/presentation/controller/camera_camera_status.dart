@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:camera_camera/src/shared/entities/camera.dart';
-import 'package:flutter/material.dart';
 
 abstract class CameraCameraStatus {}
 

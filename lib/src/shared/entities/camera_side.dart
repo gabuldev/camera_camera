@@ -8,15 +8,12 @@ extension CameraSideExt on CameraSide {
       case CameraSide.back:
         return CameraLensDirection.back;
 
-        break;
       case CameraSide.external:
         return CameraLensDirection.external;
 
-        break;
       case CameraSide.front:
         return CameraLensDirection.front;
 
-        break;
       default:
         throw "INVALID CameraLensDirection";
     }
