@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 class CameraFocus {
   CameraFocus._();
 
-  static Widget rectangle({Color color}) => _FocusRectangle(color: color);
-  static Widget circle({Color color}) => _FocusCircle(
+  static Widget rectangle({Color? color}) => _FocusRectangle(color: color);
+  static Widget circle({Color? color}) => _FocusCircle(
         color: color,
       );
-  static Widget square({Color color}) => _FocusSquare(
+  static Widget square({Color? color}) => _FocusSquare(
         color: color,
       );
 }
 
 class _FocusSquare extends StatelessWidget {
-  final Color color;
+  final Color? color;
 
-  const _FocusSquare({Key key, this.color}) : super(key: key);
+  const _FocusSquare({Key? key, this.color}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
@@ -62,9 +62,9 @@ class _SquareModePhoto extends CustomClipper<Path> {
 }
 
 class _FocusRectangle extends StatelessWidget {
-  final Color color;
+  final Color? color;
 
-  const _FocusRectangle({Key key, this.color}) : super(key: key);
+  const _FocusRectangle({Key? key, this.color}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
@@ -111,9 +111,9 @@ class _RectangleModePhoto extends CustomClipper<Path> {
 }
 
 class _FocusCircle extends StatelessWidget {
-  final Color color;
+  final Color? color;
 
-  const _FocusCircle({Key key, this.color}) : super(key: key);
+  const _FocusCircle({Key? key, this.color}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(

@@ -1,67 +1,76 @@
 import 'dart:io';
-
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Camera Camera 2.0',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: MyHomePage(title: 'Camera Camera 2.0'),
     );
   }
 }
 
-class HomeScreen extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  File val;
+class _MyHomePageState extends State<MyHomePage> {
+  final photos = <File>[];
+
+  void openCamera() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => CameraCamera(
+                  onFile: (file) {
+                    photos.add(file);
+                    Navigator.pop(context);
+                    setState(() {});
+                  },
+                )));
+  }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(title: Text("")),
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.camera_alt),
-            onPressed: () async {
-              val = await showDialog(
-                  context: context,
-                  builder: (context) => Camera(
-                        mode: CameraMode.fullscreen,
-                        //initialCamera: CameraSide.front,
-                        //enableCameraChange: false,
-                        //  orientationEnablePhoto: CameraOrientation.landscape,
-                        onChangeCamera: (direction, _) {
-                          print('--------------');
-                          print('$direction');
-                          print('--------------');
-                        },
-
-                        // imageMask: CameraFocus.square(
-                        //   color: Colors.black.withOpacity(0.5),
-                        // ),
-                      ));
-              setState(() {});
-            }),
-        body: Center(
-            child: Container(
-                height: MediaQuery.of(context).size.height * 0.7,
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: val != null
-                    ? Image.file(
-                        val,
-                        fit: BoxFit.contain,
-                      )
-                    : Text("Tire a foto"))));
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: GridView.builder(
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemCount: photos.length,
+        itemBuilder: (_, index) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: size.width,
+            child: Image.file(
+              photos[index],
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: openCamera,
+        child: Icon(Icons.camera_alt),
+      ),
+    );
   }
 }
