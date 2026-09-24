@@ -118,29 +118,26 @@ void main() {
 
     test("changeCamera for next camera and return index 0", () async {
       when(() => service.getCameras()).thenAnswer((_) => Future.value(cameras));
-
-      final matcher = <CameraStatus>[];
-      controller.listen((state) {
-        matcher.add(state);
-        state.when(
-            success: (_) {
-              controller.status = CameraStatusPreview(
-                  controller: CameraCameraController(
-                      onPath: print,
-                      flashModes: [],
-                      cameraDescription: cameras[0],
-                      resolutionPreset: ResolutionPreset.high),
-                  cameras: cameras,
-                  indexSelected: 0);
-              controller.changeCamera();
-              controller.changeCamera();
-              controller.changeCamera();
-            },
-            orElse: () {});
-      });
-
       await controller.getAvailableCameras();
 
+      // A pagina volta o status para Preview entre uma troca e outra, via
+      // startPreview(). Sem esse round-trip changeCamera cai no else e lanca.
+      CameraStatusPreview previewOn(int index) => CameraStatusPreview(
+            controller: CameraCameraController(
+                onPath: print,
+                flashModes: [],
+                cameraDescription: cameras[index],
+                resolutionPreset: ResolutionPreset.high),
+            cameras: cameras,
+            indexSelected: index,
+          );
+
+      controller.status = previewOn(0);
+      controller.changeCamera();
+      expect(controller.status.selected.indexSelected, 1);
+
+      controller.status = previewOn(1);
+      controller.changeCamera();
       expect(controller.status.selected.indexSelected, 0);
     });
 
