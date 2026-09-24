@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -22,19 +23,34 @@
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
 /build/
+coverage/
+
+# Plugin registrants: regerados por `flutter pub get`
+**/generated_plugin_registrant.dart
+**/android/**/GeneratedPluginRegistrant.java
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+**/windows/flutter/generated_plugins.cmake
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugin_registrant.h
+**/linux/flutter/generated_plugins.cmake
 
 # Android related
 **/android/**/gradle-wrapper.jar
-**/android/.gradle
+**/android/.gradle/
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
 **/android/local.properties
-**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+*.jks
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -53,18 +69,29 @@
 **/ios/**/profile
 **/ios/**/xcuserdata
 **/ios/.generated/
+**/ios/Flutter/.last_build_id
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
 **/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
+
+# macOS/Windows/Linux build
+**/macos/Flutter/ephemeral/
+**/windows/flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/Pods/
+**/xcuserdata/
+
+# Symbols
+app.*.symbols
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
