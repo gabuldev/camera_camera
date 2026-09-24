@@ -21,6 +21,9 @@ migrate_working_dir/
 .vscode/*
 !.vscode/launch.json
 
+# Skills locais do Claude Code (ficam so na maquina, fora do pacote publicado)
+.claude/
+
 # FVM
 # O symlink aponta para o SDK da maquina local; o pin de versao continua versionado
 .fvm/flutter_sdk
