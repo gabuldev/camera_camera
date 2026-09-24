@@ -1,3 +1,12 @@
+# 3.0.1
+
+- Fix `CameraSide.front` and `CameraSide.back`, which kept the opposite side instead of the requested one
+- `CameraSide.external` is now filtered as well (it was silently ignored)
+- Fix `operator ==` on every `CameraStatus`: it compared identity hash codes and never returned `true`
+- Add the missing `flutter_lints` dev dependency required by `analysis_options.yaml`
+- Widen the SDK constraint to `>=2.17.0 <4.0.0` so the package resolves on Dart 3
+- Drop the `font_awesome_flutter` dependency: it broke the build on modern Flutter (`IconData` is now a final class) and was used for a single icon. The torch flash icon is now `Icons.flashlight_on`
+
 # 3.0.0
 - Fix exports
 - Update all dependencies 
