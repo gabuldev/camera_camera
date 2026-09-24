@@ -53,8 +53,8 @@ class CameraNotifier extends ChangeNotifier {
     status = CameraStatusLoading();
     try {
       final cameras = await service.getCameras();
-      if (cameraSide == CameraSide.back || cameraSide == CameraSide.front) {
-        cameras.removeWhere((e) => e.lensDirection == cameraSide.lensDirection);
+      if (cameraSide != CameraSide.all) {
+        cameras.removeWhere((e) => e.lensDirection != cameraSide.lensDirection);
       }
       status = CameraStatusSuccess(cameras: cameras);
       return;

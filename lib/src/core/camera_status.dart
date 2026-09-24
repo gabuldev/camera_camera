@@ -14,7 +14,7 @@ class CameraStatusEmpty extends CameraStatus {
   int get hashCode => "CameraStatusEmpty".hashCode;
 
   @override
-  bool operator ==(Object other) => super.hashCode == other.hashCode;
+  bool operator ==(Object other) => other is CameraStatusEmpty;
 }
 
 class CameraStatusFailure extends CameraStatus {
@@ -32,7 +32,9 @@ class CameraStatusFailure extends CameraStatus {
   int get hashCode => "CameraStatusFailure".hashCode + message.hashCode;
 
   @override
-  bool operator ==(Object other) => super.hashCode == other.hashCode;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CameraStatusFailure && other.message == message;
 }
 
 class CameraStatusLoading extends CameraStatus {
@@ -41,7 +43,7 @@ class CameraStatusLoading extends CameraStatus {
   int get hashCode => "CameraStatusLoading".hashCode;
 
   @override
-  bool operator ==(Object other) => super.hashCode == other.hashCode;
+  bool operator ==(Object other) => other is CameraStatusLoading;
 }
 
 class CameraStatusSuccess extends CameraStatus {
@@ -54,7 +56,9 @@ class CameraStatusSuccess extends CameraStatus {
   int get hashCode => "CameraStatusSuccess".hashCode + cameras.hashCode;
 
   @override
-  bool operator ==(Object other) => super.hashCode == other.hashCode;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CameraStatusSuccess && other.cameras == cameras;
 }
 
 class CameraStatusSelected extends CameraStatus {
@@ -72,7 +76,11 @@ class CameraStatusSelected extends CameraStatus {
       "CameraStatusSelected".hashCode + cameras.hashCode + indexSelected;
 
   @override
-  bool operator ==(Object other) => super.hashCode == other.hashCode;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CameraStatusSelected &&
+          other.cameras == cameras &&
+          other.indexSelected == indexSelected;
 }
 
 class CameraStatusPreview extends CameraStatus {
@@ -91,7 +99,11 @@ class CameraStatusPreview extends CameraStatus {
       "CameraStatusPreview".hashCode + cameras.hashCode + indexSelected;
 
   @override
-  bool operator ==(Object other) => super.hashCode == other.hashCode;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CameraStatusPreview &&
+          other.cameras == cameras &&
+          other.indexSelected == indexSelected;
 }
 
 extension CameraStatusExt on CameraStatus {

@@ -43,8 +43,8 @@ void main() {
       final matcher = <CameraStatus>[];
       controller.listen((value) => matcher.add(value));
       await controller.getAvailableCameras();
-      expect(actual[0].hashCode, matcher[0].hashCode);
-      expect(actual[1].hashCode, matcher[1].hashCode);
+      expect(matcher[0], actual[0]);
+      expect(matcher[1], actual[1]);
     });
 
     test("Get AvailableCameras - failure", () async {
@@ -56,7 +56,7 @@ void main() {
       final matcher = <CameraStatus>[];
       controller.listen((value) => matcher.add(value));
       await controller.getAvailableCameras();
-      expect(actual[0].hashCode, matcher[0].hashCode);
+      expect(matcher[0], actual[0]);
     });
 
     test("changeCamera when status is CameraStatusSuccess", () async {
@@ -77,9 +77,9 @@ void main() {
       });
 
       await controller.getAvailableCameras();
-      expect(actual[0].hashCode, matcher[0].hashCode);
-      expect(actual[1].hashCode, matcher[1].hashCode);
-      expect(actual[2].hashCode, matcher[2].hashCode);
+      expect(matcher[0], actual[0]);
+      expect(matcher[1], actual[1]);
+      expect(matcher[2], actual[2]);
     });
 
     test("changeCamera for next camera", () async {
@@ -110,9 +110,9 @@ void main() {
       });
 
       await controller.getAvailableCameras();
-      expect(actual[0].hashCode, matcher[0].hashCode);
-      expect(actual[1].hashCode, matcher[1].hashCode);
-      expect(actual[2].hashCode, matcher[2].hashCode);
+      expect(matcher[0], actual[0]);
+      expect(matcher[1], actual[1]);
+      expect(matcher[2], actual[2]);
       expect(controller.status.selected.indexSelected, 1);
     });
 
@@ -142,6 +142,69 @@ void main() {
       await controller.getAvailableCameras();
 
       expect(controller.status.selected.indexSelected, 0);
+    });
+
+    test("Filter cameras by CameraSide.front", () async {
+      const front = CameraDescription(
+          name: "front",
+          sensorOrientation: 0,
+          lensDirection: CameraLensDirection.front);
+      const back = CameraDescription(
+          name: "back",
+          sensorOrientation: 0,
+          lensDirection: CameraLensDirection.back);
+      when(() => service.getCameras())
+          .thenAnswer((_) => Future.value([front, back]));
+      final notifier = CameraNotifier(
+          service: service,
+          onPath: onFile,
+          cameraSide: CameraSide.front,
+          flashModes: [FlashMode.off],
+          mode: CameraMode.ratio16s9);
+
+      await notifier.getAvailableCameras();
+
+      expect(notifier.status.success.cameras, [front]);
+    });
+
+    test("Filter cameras by CameraSide.back", () async {
+      const front = CameraDescription(
+          name: "front",
+          sensorOrientation: 0,
+          lensDirection: CameraLensDirection.front);
+      const back = CameraDescription(
+          name: "back",
+          sensorOrientation: 0,
+          lensDirection: CameraLensDirection.back);
+      when(() => service.getCameras())
+          .thenAnswer((_) => Future.value([front, back]));
+      final notifier = CameraNotifier(
+          service: service,
+          onPath: onFile,
+          cameraSide: CameraSide.back,
+          flashModes: [FlashMode.off],
+          mode: CameraMode.ratio16s9);
+
+      await notifier.getAvailableCameras();
+
+      expect(notifier.status.success.cameras, [back]);
+    });
+
+    test("CameraSide.all keeps every camera", () async {
+      const front = CameraDescription(
+          name: "front",
+          sensorOrientation: 0,
+          lensDirection: CameraLensDirection.front);
+      const back = CameraDescription(
+          name: "back",
+          sensorOrientation: 0,
+          lensDirection: CameraLensDirection.back);
+      when(() => service.getCameras())
+          .thenAnswer((_) => Future.value([front, back]));
+
+      await controller.getAvailableCameras();
+
+      expect(controller.status.success.cameras, [front, back]);
     });
   });
 }
