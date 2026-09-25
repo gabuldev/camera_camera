@@ -1,39 +1,42 @@
 name: Publish to pub.dev
 
-## Caller of this workflow should use it as follows:
-## jobs:
-##   publish:
-##     uses: dart-lang/setup-dart/.github/workflows/publish.yml@main [or a recent commit hash / version tag]
-##     # with:
-##     #   working-directory: path/to/sub/directory
-
 on:
   push:
     tags:
-    - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v'
+      # Precisa casar com o padrao configurado no pub.dev (Automated publishing).
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   publish:
     name: 'Publish to pub.dev'
-    environment: ${{ inputs.environment }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      # Necessario para o OIDC: o pub.dev troca esse JWT pela credencial.
+      id-token: write
     runs-on: ubuntu-latest
     steps:
-      # Checkout repository
       - uses: actions/checkout@v7
-      # Setup Flutter SDK
+
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      # Minimal package setup and dry run checks.
+          cache: true
+
       - name: Install dependencies
         run: flutter pub get
-        working-directory: ${{ inputs.working-directory }}
+
+      # Uma tag pode ser empurrada a mao, de um commit que nunca passou por PR.
+      # Revalidar aqui e barato e evita publicar algo quebrado, o que nao tem volta.
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run tests
+        run: flutter test
+
       - name: Publish - dry run
         run: flutter pub publish --dry-run
-        working-directory: ${{ inputs.working-directory }}
-      # Publishing...
+
       - name: Publish to pub.dev
-        run: flutter pub publish -f
-        working-directory: ${{ inputs.working-directory }}
+        run: flutter pub publish --force
